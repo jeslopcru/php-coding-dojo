@@ -22,11 +22,7 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->tripService = new TripServiceCover;
+        $user = new User('Jesus');
+        $this->tripService = new TripServiceKataCover($user);
     }
-}
-
-class TripServiceCover extends TripService
-{
-
 }
