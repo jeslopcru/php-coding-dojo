@@ -10,7 +10,9 @@
       "CalculatorProject\\": "projects/CalculatorProject/src/",
       "CalculatorProject\\Test\\": "projects/CalculatorProject/test/",
       "MafiaProject\\": "projects/MafiaProject/src/",
-      "MafiaProject\\Test\\": "projects/MafiaProject/test/"
+      "MafiaProject\\Test\\": "projects/MafiaProject/test/",
+      "TripServiceKata\\": "projects/TripServiceKataProject/src/",
+      "TripServiceKata\\Test\\": "projects/TripServiceKataProject/test/"
     }
   },
   "require-dev": {
