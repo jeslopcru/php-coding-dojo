@@ -1,4 +1,12 @@
-# PHP coding dojo project
+# PHP coding dojo project kata
+
+Proyecto para tener todas las katas PHP en un mismo proyecto y poder añadir nuevas de manera sencilla.
+La idea es poder utilizar PHPStorm como IDE yque todo funcione facilmente.
+Esta basado en el proyecto de  matthiasnoback/php-coding-dojo
+
+Dentro del directorio _kata_ estan los enunciados de las katas y dentro de la carpeta _projects_ están 
+algunas soluciones a katas
+
 
 ## Code Katas:
 - Calculator
@@ -7,47 +15,52 @@
 - Mafia
 - Minesweeper
 - Minesweeper Extra
+- TripService Kata
 - Yahtzee
 
-## Setup
+## Instalación
 
-To install the project:
+Clonar el proyecto
 
-    php composer.phar create-project matthiasnoback/php-coding-dojo [path] *
+```
+git clone 
+```
 
-You will have an empty ``src/`` directory and a ``phpunit.xml.dist`` that is configured to run all the PHPUnit tests
-names ``*Test.php`` in the directories ``src/*/Tests`` (and their subdirectories). When you use this configuration the
-Composer autoloader will be initialized automatically to make sure that every namespaced class inside ``src/`` can be
-auto-loaded from within the test cases.
+Instalar las dependencias con composer
 
-### Configure PHPStorm to run the tests
+```
+composer install
+```
 
-- Choose ``Run``, ``Edit configurations...`` and remove any existing configuration.
-- Select ``Defaults - PHPUnit``, put a check before ``Use alternative configuration file`` and select
-  ``phpunit.xml.dist`` from this project.
-- Click the button to the right of this field. In the dialog that appears select ``Use custom loader`` and select the
-  file ``vendor/autoload.php`` inside your project. This will make sure PHPStorm uses the bundled version of PHPUnit.
+Ya podemos ejecutar los todos los test con *total_phpunit.xml* o ejecutar los test solo de un proyecto
+utilizando el phpunit.xml que esta dentro de cada carpeta de proyecto.
 
-To validate your setup once you have installed this project, run the tests: right-click on the ``src/`` directory and
-then select ``Run 'src'``.
 
-## Run the unit tests
+## Hacer una nueva kata
 
-To run all tests in a testcase press ``Cmd + alt + R`` when the cursor is *not* inside a method.
+Para ello tenemos que crear una carpeta nueva dentro de _projects_ este directorio nuevo debe tener 2 subdirectorios _src_y _test_
+y añadir al archivio _composer.json_ la ruta al proyecto.
 
-Or you can run the tests from the command-line:
+```
+La manera más sencilla es copiar *DummyProject*, renombrarla con el nombre de la kata que vayamos a realizar y añadir al fichero composer.json
+```
 
+#### Configurar PHPStorm para ejecutar lo tests
+
+- Ir a ``Run``, ``Edit configurations...`` y borrar todas las configuraciones
+- Seleccionar ``Defaults - PHPUnit``, hacer clic en ``Use alternative configuration file`` y seleccionar
+  ``phpunit.xml.dist``  de este proyecto.
+- Hacer clic en ``Use custom loader`` y seleccionar el fichero ``vendor/autoload.php`` de dentro del proyecto.
+- Ahora podemos ejecutar los test de manera sencilla pulsando ejecutar.
+
+#### Ejecutar los test
+Para ejecutar  todos los test podemos utilizar  ``Cmd + alt + R`` o desde la linea de comandos
+
+```
     php vendor/bin/phpunit
+```
 
-When you first run the tests, PHPStorm might ask you to supply a PHP interpreter.
-
-## PHPUnit cheatsheet
-
-You can use my [PHPUnit cheatsheet](https://github.com/matthiasnoback/workshop-unit-testing/blob/master/cheatsheet.md)
-as a quick reference for PHPUnit usage.
-
-
-##Solutions
+## Soluciones
 
 - Mafia
 - Calculator -> 2 versiones (con Mock y sin Mock)
