@@ -8,6 +8,12 @@ use TripServiceKata\User\UserSession;
 
 class TripService
 {
+    /**
+     * @param User $user
+     * @return array|void
+     * @throws UserNotLoggedInException
+     * @throws \TripServiceKata\Exception\DependendClassCallDuringUnitTestException
+     */
     public function getTripsByUser(User $user)
     {
         $tripList = array();

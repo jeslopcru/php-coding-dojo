@@ -2,6 +2,7 @@
 
 namespace TripServiceKata\User;
 
+
 use TripServiceKata\Exception\DependentClassCalledDuringUnitTestException;
 
 class UserSession
