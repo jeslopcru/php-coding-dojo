@@ -3,26 +3,27 @@
 namespace TripServiceKata\Test;
 
 use PHPUnit_Framework_TestCase;
-use TripServiceKata\Trip\TripService;
 use TripServiceKata\User\User;
 
 class TripServiceTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var TripService
-     */
-    private $tripService;
-
     /** @test */
     public function ifUserNotLoggedThrowException()
     {
         $this->setExpectedException('TripServiceKata\Exception\UserNotLoggedInException');
+        $tripService = new TripServiceKataCover(null);
         $user = new User('Jesus');
-        $this->tripService->getTripsByUser($user);
+        $tripService->getTripsByUser($user);
     }
 
-    protected function setUp()
+    /** @test */
+    public function whenUsersHasNoFriendsReturnAnEmptyList()
     {
-        $this->tripService = new TripServiceKataCover(null);
+        $loggedUser = new User('Marta');
+        $tripService = new TripServiceKataCover($loggedUser);
+        $user = new User('Jesus');
+        $result = $tripService->getTripsByUser($user);
+
+        $this->assertEquals([], $result);
     }
 }
