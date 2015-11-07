@@ -22,11 +22,6 @@ class User
         return $this->trips;
     }
 
-    public function getFriends()
-    {
-        return $this->friends;
-    }
-
     public function addFriend(User $user)
     {
         $this->friends[] = $user;
@@ -35,5 +30,22 @@ class User
     public function addTrip(Trip $trip)
     {
         $this->trips[] = $trip;
+    }
+
+    public function areFriends($loggedUser)
+    {
+        $isFriend = false;
+        foreach ($this->getFriends() as $friend) {
+            if ($friend == $loggedUser) {
+                $isFriend = true;
+                break;
+            }
+        }
+        return $isFriend;
+    }
+
+    public function getFriends()
+    {
+        return $this->friends;
     }
 }

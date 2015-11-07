@@ -47,14 +47,7 @@ class TripService
      */
     private function areFriends(User $user, $loggedUser)
     {
-        $isFriend = false;
-        foreach ($user->getFriends() as $friend) {
-            if ($friend == $loggedUser) {
-                $isFriend = true;
-                break;
-            }
-        }
-        return $isFriend;
+        return $user->areFriends($loggedUser);
     }
 
     protected function getTripList(User $user)
