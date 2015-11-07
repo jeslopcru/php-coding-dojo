@@ -4,6 +4,7 @@ namespace TripServiceKata\Test;
 
 use PHPUnit_Framework_TestCase;
 use TripServiceKata\Trip\Trip;
+use TripServiceKata\Trip\TripService;
 use TripServiceKata\User\User;
 
 class TripServiceTest extends PHPUnit_Framework_TestCase
@@ -14,16 +15,28 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
     private $withFriendsUser;
     /** @var  User */
     private $loggedUser;
+    /** @var  TripService */
+    private $tripService;
 
     public function setUp()
     {
         parent::setUp();
         //Logged User
         $this->loggedUser = new User('LoggedUserName');
-        //User with no Friends
+        $this->createNoFriend();
+        $this->createFriend();
+        $this->tripService = new TripServiceKataCover($this->loggedUser);
+
+    }
+
+    private function createNoFriend()
+    {
         $this->noFriendsUser = new User('AloneName');
         $this->noFriendsUser->addTrip(new Trip('BackpackerTrip'));
-        //User with friend
+    }
+
+    private function createFriend()
+    {
         $this->withFriendsUser = new User('FriendlyName');
         $this->withFriendsUser->addFriend($this->loggedUser);
         $this->withFriendsUser->addTrip(new Trip('FriendsWithFriends'));
@@ -48,9 +61,8 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function whenUsersHasNoFriendsReturnAnEmptyList()
     {
-        $tripService = new TripServiceKataCover($this->loggedUser);
-
-        $this->assertEquals([], $tripService->getTripsByUser($this->getNoFriendUserHelper()));
+        $tripsByUser = $this->tripService->getTripsByUser($this->getNoFriendUserHelper());
+        $this->assertEquals([], $tripsByUser);
     }
 
     /**
@@ -64,8 +76,7 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function whenUsersHasFriendsReturnTripListOfAFriend()
     {
-        $tripService = new TripServiceKataCover($this->loggedUser);
-        $result = $tripService->getTripsByUser($this->getWithFriendUserHelper());
+        $result = $this->tripService->getTripsByUser($this->getWithFriendUserHelper());
 
         $this->assertEquals($this->getWithFriendUserHelper()->getTrips(), $result);
     }
