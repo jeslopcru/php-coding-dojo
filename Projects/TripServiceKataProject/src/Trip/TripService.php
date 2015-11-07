@@ -12,7 +12,7 @@ class TripService
      * @param User $user
      * @return array|void
      * @throws UserNotLoggedInException
-     * @throws \TripServiceKata\Exception\DependendClassCallDuringUnitTestException
+     * @throws \TripServiceKata\Exception\
      */
     public function getTripsByUser(User $user)
     {

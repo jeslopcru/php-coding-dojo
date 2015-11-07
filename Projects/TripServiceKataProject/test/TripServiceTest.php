@@ -14,15 +14,15 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
     private $tripService;
 
     /** @test */
-    public function it_does_something()
+    public function ifUserNotLoggedThrowException()
     {
+        $this->setExpectedException('TripServiceKata\Exception\UserNotLoggedInException');
         $user = new User('Jesus');
         $this->tripService->getTripsByUser($user);
     }
 
     protected function setUp()
     {
-        $user = new User('Jesus');
-        $this->tripService = new TripServiceKataCover($user);
+        $this->tripService = new TripServiceKataCover(null);
     }
 }
