@@ -18,7 +18,7 @@ class TripService
     {
         $loggedUser = $this->getLoggedUser();
         $this->isUserLogged($loggedUser);
-        $isFriend = $this->areFriends($user, $loggedUser);
+        $isFriend = $user->areFriends($loggedUser);
         $tripList = array();
         if ($isFriend) {
             $tripList = $this->getTripList($user);
@@ -40,6 +40,11 @@ class TripService
         }
     }
 
+    protected function getTripList(User $user)
+    {
+        return TripDAO::findTripsByUser($user);
+    }
+
     /**
      * @param User $user
      * @param $loggedUser
@@ -48,10 +53,5 @@ class TripService
     private function areFriends(User $user, $loggedUser)
     {
         return $user->areFriends($loggedUser);
-    }
-
-    protected function getTripList(User $user)
-    {
-        return TripDAO::findTripsByUser($user);
     }
 }
