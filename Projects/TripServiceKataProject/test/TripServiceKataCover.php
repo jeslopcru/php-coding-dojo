@@ -25,6 +25,6 @@ class TripServiceKataCover extends TripService
 
     protected function getTripList(User $user)
     {
-        return $user;
+        return $user->getTrips();
     }
 }
