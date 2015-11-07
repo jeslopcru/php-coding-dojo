@@ -16,16 +16,10 @@ class TripService
      */
     public function getTripsByUser(User $user)
     {
-        $tripList = array();
         $loggedUser = $this->getLoggedUser();
         $this->isUserLogged($loggedUser);
-        $isFriend = false;
-        foreach ($user->getFriends() as $friend) {
-            if ($friend == $loggedUser) {
-                $isFriend = true;
-                break;
-            }
-        }
+        $isFriend = $this->areFriends($user, $loggedUser);
+        $tripList = array();
         if ($isFriend) {
             $tripList = $this->getTripList($user);
         }
@@ -44,6 +38,23 @@ class TripService
             throw new UserNotLoggedInException();
 
         }
+    }
+
+    /**
+     * @param User $user
+     * @param $loggedUser
+     * @return bool
+     */
+    private function areFriends(User $user, $loggedUser)
+    {
+        $isFriend = false;
+        foreach ($user->getFriends() as $friend) {
+            if ($friend == $loggedUser) {
+                $isFriend = true;
+                break;
+            }
+        }
+        return $isFriend;
     }
 
     protected function getTripList(User $user)
