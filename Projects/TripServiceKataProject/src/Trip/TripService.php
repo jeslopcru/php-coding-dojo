@@ -8,6 +8,14 @@ use TripServiceKata\User\UserSession;
 
 class TripService
 {
+    /** @var  UserSession */
+    private $userSession;
+
+    public function __construct($userSession)
+    {
+        $this->userSession = $userSession;
+    }
+
     /**
      * @param User $user
      * @return array|void
@@ -29,7 +37,7 @@ class TripService
 
     protected function getLoggedUser()
     {
-        return UserSession::getInstance()->getLoggedUser();
+        return $this->userSession->getLoggedUser();
     }
 
     private function isUserLogged($loggedUser)

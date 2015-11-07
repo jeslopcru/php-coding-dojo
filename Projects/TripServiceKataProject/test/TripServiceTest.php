@@ -25,7 +25,7 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
         $this->loggedUser = new User('LoggedUserName');
         $this->createNoFriend();
         $this->createFriend();
-        $this->tripService = new TripServiceKataCover($this->loggedUser);
+        $this->tripService = new TripServiceKataCover($this->getUserSessionMock($this->loggedUser));
 
     }
 
@@ -42,11 +42,21 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
         $this->withFriendsUser->addTrip(new Trip('FriendsWithFriends'));
     }
 
+    private function getUserSessionMock($loggedUser)
+    {
+        $userSessionMock = $this->getMockBuilder('UserSession')
+            ->setMethods(array('getLoggedUser'))
+            ->getMock();
+        $userSessionMock->method('getLoggedUser')->willReturn($loggedUser);
+
+        return $userSessionMock;
+    }
+
     /** @test */
     public function ifUserNotLoggedThrowException()
     {
         $this->setExpectedException('TripServiceKata\Exception\UserNotLoggedInException');
-        $tripService = new TripServiceKataCover(null);
+        $tripService = new TripServiceKataCover($this->getUserSessionMock(null));
         $tripService->getTripsByUser($this->getAnyUserHelper());
     }
 
