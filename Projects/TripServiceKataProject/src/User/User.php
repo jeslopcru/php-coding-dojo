@@ -32,16 +32,9 @@ class User
         $this->trips[] = $trip;
     }
 
-    public function areFriends($loggedUser)
+    public function areFriends($user)
     {
-        $isFriend = false;
-        foreach ($this->getFriends() as $friend) {
-            if ($friend == $loggedUser) {
-                $isFriend = true;
-                break;
-            }
-        }
-        return $isFriend;
+        return in_array($user, $this->getFriends());
     }
 
     public function getFriends()
