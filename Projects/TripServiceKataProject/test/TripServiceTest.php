@@ -3,7 +3,9 @@
 namespace TripServiceKata\Test;
 
 use PHPUnit_Framework_TestCase;
+use Prophecy\Argument;
 use TripServiceKata\Trip\Trip;
+use TripServiceKata\Trip\TripDAO;
 use TripServiceKata\Trip\TripService;
 use TripServiceKata\User\User;
 
@@ -25,8 +27,10 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
         $this->loggedUser = new User('LoggedUserName');
         $this->createNoFriend();
         $this->createFriend();
-        $this->tripService = new TripServiceKataCover($this->getUserSessionMock($this->loggedUser));
-
+        $this->tripService = new TripService(
+            $this->getUserSessionMock($this->loggedUser),
+            $this->getTripDAOMock()
+        );
     }
 
     private function createNoFriend()
@@ -44,7 +48,7 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
 
     private function getUserSessionMock($loggedUser)
     {
-        $userSessionMock = $this->getMockBuilder('UserSession')
+        $userSessionMock = $this->getMockBuilder('TripServiceKata\User\UserSession')
             ->setMethods(array('getLoggedUser'))
             ->getMock();
         $userSessionMock->method('getLoggedUser')->willReturn($loggedUser);
@@ -52,11 +56,29 @@ class TripServiceTest extends PHPUnit_Framework_TestCase
         return $userSessionMock;
     }
 
+    private function getTripDAOMock()
+    {
+        /** @var ObjectProphecy $userSessionProphecy */
+        $tripDaoProphecy = $this->prophesize('TripServiceKata\Trip\TripDAO');
+
+        $tripDaoProphecy->findTrips(Argument::type('TripServiceKata\User\User'))
+            ->will(
+                function ($args) {
+                    /** @var User $user */
+                    $user = $args[0];
+
+                    return $user->getTrips();
+                }
+            );
+
+        return $tripDaoProphecy->reveal();
+    }
+
     /** @test */
     public function ifUserNotLoggedThrowException()
     {
         $this->setExpectedException('TripServiceKata\Exception\UserNotLoggedInException');
-        $tripService = new TripServiceKataCover($this->getUserSessionMock(null));
+        $tripService = new TripService($this->getUserSessionMock(null), new TripDAO());
         $tripService->getTripsByUser($this->getAnyUserHelper());
     }
 

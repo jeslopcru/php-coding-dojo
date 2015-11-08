@@ -10,10 +10,13 @@ class TripService
 {
     /** @var  UserSession */
     private $userSession;
+    /** @var  TripDAO */
+    private $tripDAO;
 
-    public function __construct($userSession)
+    public function __construct(UserSession $userSession, TripDAO $tripDAO)
     {
         $this->userSession = $userSession;
+        $this->tripDAO = $tripDAO;
     }
 
     /**
@@ -32,7 +35,6 @@ class TripService
             $tripList = $this->getTripList($user);
         }
         return $tripList;
-
     }
 
     protected function getLoggedUser()
@@ -44,22 +46,11 @@ class TripService
     {
         if ($loggedUser === null) {
             throw new UserNotLoggedInException();
-
         }
     }
 
     protected function getTripList(User $user)
     {
-        return TripDAO::findTripsByUser($user);
-    }
-
-    /**
-     * @param User $user
-     * @param $loggedUser
-     * @return bool
-     */
-    private function areFriends(User $user, $loggedUser)
-    {
-        return $user->areFriends($loggedUser);
+        return $this->tripDAO->findTrips($user);
     }
 }
