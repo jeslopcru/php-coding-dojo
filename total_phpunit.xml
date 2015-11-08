@@ -27,4 +27,9 @@
             <directory>./projects/*/test</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">projects/*/src</directory>
+        </whitelist>
+    </filter>
 </phpunit>
