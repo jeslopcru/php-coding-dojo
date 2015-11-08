@@ -4,5 +4,4 @@ namespace TripServiceKata\Trip;
 
 class Trip
 {
-
 }

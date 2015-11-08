@@ -8,24 +8,49 @@ use TripServiceKata\User\UserSession;
 
 class TripService
 {
+    /** @var  UserSession */
+    private $userSession;
+    /** @var  TripDAO */
+    private $tripDAO;
+
+    public function __construct(UserSession $userSession, TripDAO $tripDAO)
+    {
+        $this->userSession = $userSession;
+        $this->tripDAO = $tripDAO;
+    }
+
+    /**
+     * @param User $user
+     * @return array|void
+     * @throws UserNotLoggedInException
+     * @throws \TripServiceKata\Exception\
+     */
     public function getTripsByUser(User $user)
     {
+        $loggedUser = $this->getLoggedUser();
+        $this->isUserLogged($loggedUser);
+        $isFriend = $user->areFriends($loggedUser);
         $tripList = array();
-        $loggedUser = UserSession::getInstance()->getLoggedUser();
-        $isFriend = false;
-        if ($loggedUser != null) {
-            foreach ($user->getFriends() as $friend) {
-                if ($friend == $loggedUser) {
-                    $isFriend = true;
-                    break;
-                }
-            }
-            if ($isFriend) {
-                $tripList = TripDAO::findTripsByUser($user);
-            }
-            return $tripList;
-        } else {
+        if ($isFriend) {
+            $tripList = $this->getTripList($user);
+        }
+        return $tripList;
+    }
+
+    protected function getLoggedUser()
+    {
+        return $this->userSession->getLoggedUser();
+    }
+
+    private function isUserLogged($loggedUser)
+    {
+        if ($loggedUser === null) {
             throw new UserNotLoggedInException();
         }
+    }
+
+    protected function getTripList(User $user)
+    {
+        return $this->tripDAO->findTrips($user);
     }
 }
