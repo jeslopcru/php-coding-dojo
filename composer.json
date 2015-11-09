@@ -12,7 +12,9 @@
       "MafiaProject\\": "projects/MafiaProject/src/",
       "MafiaProject\\Test\\": "projects/MafiaProject/test/",
       "TripServiceKata\\": "projects/TripServiceKataProject/src/",
-      "TripServiceKata\\Test\\": "projects/TripServiceKataProject/test/"
+      "TripServiceKata\\Test\\": "projects/TripServiceKataProject/test/",
+      "GildedRose\\": "projects/GildedRoseProject/src/",
+      "GildedRose\\Test\\": "projects/GildedRoseProject/test/"
     }
   },
   "require-dev": {
