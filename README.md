@@ -17,6 +17,7 @@ algunas soluciones a katas
 - Minesweeper Extra
 - TripService Kata
 - Yahtzee
+- Lean Code Kata 
 
 ## Instalación
 
@@ -65,3 +66,4 @@ Para ejecutar  todos los test podemos utilizar  ``Cmd + alt + R`` o desde la lin
 - Mafia
 - Calculator -> 2 versiones (con Mock y sin Mock)
 - TripServiceKata
+- Lean Code Kata: Kata realizada en [el meetup Software Craftsmanship Madrid](http://www.meetup.com/es/madswcraft/events/225893262/) del 2/12/2015 junto con [Luis Rovirosa](https://github.com/luisrovirosa)
